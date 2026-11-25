@@ -34,6 +34,11 @@ if (EXCUSE.length < 1 || EXCUSE.length > 200 || EXCUSE.trim().length === 0) {
   throw new Error(`entry must be 1-200 characters, got ${EXCUSE.length}`);
 }
 
+// Guard: the gate scores one line, so a stray newline would break the entry.
+if (EXCUSE.includes("\n") || EXCUSE.includes("\r")) {
+  throw new Error("entry must be a single line");
+}
+
 const dest = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
 // In the grader /output is a mount point: create it when it is missing,
